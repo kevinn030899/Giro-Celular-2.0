@@ -1,0 +1,60 @@
+GIRO CELULAR 2.0 — PACOTE REVISADO
+
+Esta versão é independente do Giro Celular original. NÃO substitua nem apague os arquivos do repositório antigo.
+
+ARQUIVOS PARA ENVIAR À RAIZ DO NOVO REPOSITÓRIO:
+- index.html
+- app.js
+- manifest.webmanifest
+- sw.js
+- icon-192.png
+- icon-512.png
+
+PUBLICAÇÃO:
+1. Crie um repositório novo chamado Giro-Celular-2.0.
+2. Para usar GitHub Pages gratuito, deixe o repositório público.
+3. Envie os seis arquivos para a raiz do repositório e faça Commit changes.
+4. Abra Settings > Pages. Em Build and deployment, selecione Deploy from a branch, branch main e folder /(root). Salve.
+5. Aguarde o endereço aparecer em Pages.
+6. No iPhone, abra o endereço pelo Safari, toque em Compartilhar > Adicionar à Tela de Início.
+
+RECURSOS REVISTOS:
+- Catálogo Apple, Samsung e Xiaomi (lista inicial, não garantidamente exaustiva).
+- Cadastro de compra com armazenamento, cor, condição, bateria, fornecedor e checklist obrigatório.
+- Bloqueio de aprovação pela calculadora se conta/iCloud, IMEI e testes não forem confirmados; defeitos exigem diagnóstico e não recebem aprovação automática.
+- Registro de venda com desconto, taxas, despesas, lucro, margem mensal e prazo de garantia.
+- Validação de valores, datas, duplicidade de venda e estrutura de backup JSON.
+- Data local do iPhone e cache offline versionado.
+- Dados armazenados localmente no navegador do iPhone.
+
+LIMITAÇÕES IMPORTANTES:
+- Não há sincronização em nuvem nem cópia automática. Exporte backups manualmente e guarde-os em local seguro.
+- Preços automáticos da calculadora são apenas referências antigas/ilustrativas para alguns iPhones básicos. Para todos os outros modelos e para decisões reais, informe o preço de revenda pesquisado; não são cotações de mercado em tempo real.
+- O checklist da tela de inspeção é uma lista auxiliar. O cadastro exige as confirmações principais, mas o aplicativo não consegue verificar tecnicamente o aparelho.
+- Não armazene IMEI completo, dados pessoais de clientes ou documentos sensíveis sem necessidade.
+
+TESTES REALIZADOS ANTES DA ENTREGA:
+- Verificação de sintaxe do JavaScript com Node.js.
+- Conferência estática dos IDs usados no JavaScript contra os IDs existentes no HTML.
+- Revisão manual dos fluxos de compra, venda, cálculo e backup.
+
+Ainda é necessário testar a publicação e os fluxos no Safari do iPhone antes de usar com registros reais.
+
+
+ATUALIZAÇÃO DO CATÁLOGO APPLE
+O catálogo Apple inclui iPhone X, XR, XS, XS Max e as linhas 11, 12, 13, 14, 15, 16, 17 e iPhone 18 Pro/Pro Max, com variantes mini, Plus, Pro, Pro Max, e e Air quando aplicáveis. O iPhone 18 Pro e 18 Pro Max foram anunciados oficialmente pela Apple em setembro de 2026. Não foram incluídos iPhone 18 ou iPhone 18 Plus porque não constam como modelos anunciados na linha consultada.
+
+IMPORTANTE SOBRE PREÇOS
+O catálogo é apenas uma lista de modelos para cadastro. Não significa que existam preços automáticos confiáveis para todos eles. Pesquise o preço de revenda praticado no mercado local e informe-o manualmente na calculadora.
+
+
+CATÁLOGO AMPLIADO
+Marcas: Apple, Samsung, Xiaomi/Redmi/POCO, Motorola, Google Pixel, realme e Infinix.
+A lista é um catálogo de seleção, não uma garantia de disponibilidade oficial no Brasil nem de liquidez de revenda. Pesquise preço e demanda local antes de comprar. Modelos importados/raros podem ter baixa procura e assistência limitada.
+
+
+MELHORIA V4 — SEMÁFORO DE LIQUIDEZ
+- A avaliação mostra uma classificação inicial de liquidez alta, média ou baixa por marca/família de modelo.
+- O estoque exibe a classificação de cada aparelho.
+- O painel financeiro conta quantos aparelhos em estoque estão em cada faixa.
+- Esta classificação é heurística e não consulta anúncios, vendas concluídas ou demanda em tempo real. Deve ser ajustada conforme a procura e os preços da região. Não garante velocidade de venda ou lucro.

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101010">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Giro 2.0">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>Giro Celular 2.0</title>
+<style>
+:root{color-scheme:dark;--bg:#101010;--panel:#1c1c1e;--muted:#aaa;--gold:#f5b62f;--line:#383838;--green:#52d28a;--red:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f7f7;font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:88px}
+header{padding:14px 14px 14px;background:#171717;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.headrow{display:flex;align-items:center;gap:12px}.menuBtn{width:44px;min-width:44px;height:42px;margin:0;padding:0;font-size:24px;background:#292929;color:var(--gold)}.headtitle{flex:1}.drawer{position:fixed;inset:0 auto 0 0;width:min(82vw,310px);background:#191919;border-right:1px solid var(--gold);z-index:10;padding:18px;box-shadow:12px 0 30px #0009;transform:translateX(-110%);transition:transform .2s}.drawer.open{transform:translateX(0)}.drawer button{margin:7px 0;text-align:left}.scrim{position:fixed;inset:0;background:#0009;z-index:9}.pricebox{background:#292929;border:1px solid #444;border-radius:12px;padding:12px;margin:8px 0}.pricebox b{color:var(--gold)}
+h1{margin:0;font-size:23px;letter-spacing:1px}header small{color:var(--gold);font-weight:700;letter-spacing:2px}
+main{padding:12px;max-width:760px;margin:auto}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;margin:12px 0}
+h2{font-size:18px;margin:0 0 12px;color:var(--gold)}h3{font-size:15px;margin:0 0 8px}
+label{display:block;color:#ddd;font-size:13px;margin:11px 0 5px}
+input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#101010;color:white;font-size:16px}
+input[type=checkbox]{width:auto;transform:scale(1.15);margin-right:8px}
+button{background:var(--gold);color:#171717;border:0;border-radius:11px;padding:12px 14px;font-size:14px;font-weight:800;width:100%;margin-top:10px}
+button.secondary{background:#333;color:#fff}button.danger{background:#512626;color:#fff}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#171717;border-top:1px solid var(--line);padding:7px 2px calc(7px + env(safe-area-inset-bottom));z-index:3}
+nav button{background:transparent;color:#bbb;margin:0;padding:7px 1px;font-size:11px;flex:1}nav button.active{color:var(--gold)}
+.result{font-size:23px;font-weight:800;color:var(--gold)}.muted{color:var(--muted);font-size:12px;line-height:1.45}.row{display:flex;justify-content:space-between;gap:10px;margin:9px 0;align-items:center}.hidden{display:none}.item{border-top:1px solid var(--line);padding:12px 0}.pill{display:inline-block;background:#303030;padding:4px 8px;border-radius:20px;font-size:11px;color:var(--gold)}.pill.success{background:#173b2a;color:#8ee0ad}.pill.warning{background:#493916;color:#ffd36a}.pill.danger{background:#4a2424;color:#ff9a9a}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{background:#292929;border-radius:12px;padding:12px}.metric small{display:block;color:#bbb;font-size:11px}.metric b{display:block;font-size:18px;margin-top:5px}.positive{color:var(--green)}.negative{color:var(--red)}
+.actions{display:flex;gap:8px}.actions button{flex:1}.inline{display:flex;gap:8px}.inline>*{flex:1;min-width:0}
+</style>
+</head>
+<body>
+<header><div class="headrow"><button class="menuBtn" onclick="toggleMenu()" aria-label="Abrir menu">☰</button><div class="headtitle"><small>VERSÃO 2.0 • COMPRA • VENDA • LUCRO</small><h1>GIRO CELULAR <span style="color:var(--gold)">2.0</span></h1></div></div></header>
+<div id="scrim" class="scrim hidden" onclick="toggleMenu(false)"></div><aside id="drawer" class="drawer"><h2>Menu principal</h2><button onclick="goMenu('eval')">🧮 Avaliar aparelho</button><button onclick="goMenu('history')">📦 Compras e vendas</button><button onclick="goMenu('finance')">📊 Financeiro e backup</button><button onclick="goMenu('check')">☑️ Checklist</button><button onclick="goMenu('repair')">🛠️ Assistência técnica</button><button onclick="goMenu('guide')">⚙️ Gestão</button><button class="secondary" onclick="toggleMenu(false)">Fechar menu</button></aside>
+<main>
+<section id="eval">
+<div class="card"><h2>Calculadora de negociação</h2>
+<label>Marca</label><select id="brand"><option>Apple</option><option>Samsung</option><option>Xiaomi</option><option>Motorola</option><option>Google</option><option>realme</option><option>Infinix</option></select>
+<label>Modelo</label><select id="model"></select><div class="row"><span>Liquidez estimada</span><b id="liquidityEval" class="pill">Aguardando modelo</b></div><p class="muted" id="catalogNote">Catálogo de modelos Apple, Samsung e Xiaomi.</p>
+<label>Armazenamento</label><select id="storage"><option>64 GB</option><option selected>128 GB</option><option>256 GB</option><option>512 GB</option><option>1 TB</option></select>
+<label>Conservação</label><select id="condition"><option value="1.15">Novo / lacrado</option><option value="1.06">Seminovo impecável</option><option value="1" selected>Usado em bom estado</option><option value=".88">Usado com marcas</option><option value=".65">Com defeitos (diagnóstico obrigatório)</option></select>
+<label>Saúde da bateria: <b id="batteryLabel">88%</b></label><input id="battery" type="range" min="50" max="100" value="88">
+<label>Preço de revenda pesquisado (opcional)</label><input id="market" inputmode="decimal" placeholder="Informe um preço realista pesquisado">
+<label>Preço pedido (R$)</label><input id="purchase" inputmode="decimal" placeholder="Ex.: 1350">
+<label>Reparos previstos (R$)</label><input id="repairs" inputmode="decimal" value="0">
+<label>Outras despesas (R$)</label><input id="other" inputmode="decimal" value="0">
+<label>Lucro mínimo desejado (R$)</label><input id="profitGoal" inputmode="decimal" value="250">
+<div><label><input type="checkbox" id="icloud"> iCloud/conta removida e aparelho desvinculado</label><label><input type="checkbox" id="imei"> IMEI consultado e sem restrição</label><label><input type="checkbox" id="tested"> Funções principais testadas</label></div>
+<button onclick="calculate()">Calcular negociação</button>
+</div>
+<div class="card"><h2>Resultado da avaliação</h2>
+<div class="row"><span>Revenda estimada</span><b id="resale" class="result">R$ 0</b></div>
+<div class="row"><span>Investimento total</span><b id="total">R$ 0</b></div>
+<div class="row"><span>Oferta máxima</span><b id="offer" class="result">R$ 0</b></div>
+<div class="row"><span>Lucro projetado</span><b id="gain">R$ 0</b></div>
+<p id="verdict" class="muted">Informe os dados. Valores automáticos são referências ilustrativas, não cotações em tempo real. Pesquise preços locais antes de negociar.</p>
+<button onclick="registerPurchase()">Registrar como compra</button>
+<p class="muted">A avaliação só entra no histórico de compras quando você confirmar em “Registrar como compra”.</p>
+</div>
+</section>
+
+<section id="history" class="hidden">
+<div class="card"><h2>Registrar uma compra</h2>
+<label>Marca</label><select id="buyBrand"><option>Apple</option><option>Samsung</option><option>Xiaomi</option><option>Motorola</option><option>Google</option><option>realme</option><option>Infinix</option></select>
+<label>Modelo</label><select id="buyModel"></select>
+<div class="inline"><div><label>Armazenamento</label><select id="buyStorage"><option>64 GB</option><option selected>128 GB</option><option>256 GB</option><option>512 GB</option><option>1 TB</option></select></div><div><label>Cor (opcional)</label><input id="buyColor" placeholder="Ex.: preto"></div></div>
+<div class="inline"><div><label>Condição</label><select id="buyCondition"><option>Novo/lacrado</option><option selected>Seminovo</option><option>Usado</option><option>Com defeito diagnosticado</option></select></div><div><label>Bateria (%)</label><input id="buyBattery" type="number" min="0" max="100" placeholder="Ex.: 88"></div></div>
+<div class="inline"><div><label>Data da compra</label><input id="buyDate" type="date"></div><div><label>Valor pago (R$)</label><input id="buyPrice" inputmode="decimal" placeholder="0,00"></div></div>
+<div class="inline"><div><label>Reparos (R$)</label><input id="buyRepair" inputmode="decimal" value="0"></div><div><label>Outras despesas (R$)</label><input id="buyOther" inputmode="decimal" value="0"></div></div>
+<label>IMEI / identificação (opcional)</label><input id="buyImei" placeholder="Evite compartilhar publicamente">
+<label>Fornecedor / observações</label><textarea id="buyNotes" rows="2" placeholder="Fornecedor, estado, acessórios..."></textarea>
+<div><label><input type="checkbox" id="buyIcloud"> Conta/iCloud removida e aparelho desvinculado</label><label><input type="checkbox" id="buyImeiOk"> IMEI consultado e sem restrição</label><label><input type="checkbox" id="buyTested"> Funções principais testadas</label><label><input type="checkbox" id="buyOrigin"> Procedência conferida</label></div>
+<button onclick="addPurchase()">Salvar compra no estoque</button>
+</div>
+<div class="card"><h2>Estoque e histórico</h2><div id="stockList" class="muted">Nenhum aparelho cadastrado.</div></div>
+<div class="card"><h2>Registrar revenda</h2>
+<label>Selecione um aparelho disponível</label><select id="saleDevice"></select>
+<div class="inline"><div><label>Data da venda</label><input id="saleDate" type="date"></div><div><label>Valor recebido (R$)</label><input id="salePrice" inputmode="decimal" placeholder="0,00"></div></div>
+<div class="inline"><div><label>Taxas / comissão (R$)</label><input id="saleFees" inputmode="decimal" value="0"></div><div><label>Outras despesas da venda (R$)</label><input id="saleOther" inputmode="decimal" value="0"></div></div>
+<div class="inline"><div><label>Garantia (dias)</label><input id="saleWarranty" type="number" min="0" max="365" value="90"></div><div><label>Desconto (R$)</label><input id="saleDiscount" inputmode="decimal" value="0"></div></div>
+<label>Cliente / observações (opcional)</label><input id="saleNotes" placeholder="Anotações da venda">
+<button onclick="addSale()">Registrar revenda e calcular lucro</button>
+</div>
+</section>
+
+<section id="finance" class="hidden">
+<div class="card"><h2>Painel financeiro</h2>
+<div class="grid">
+<div class="metric"><small>Total investido em compras</small><b id="invested">R$ 0</b></div>
+<div class="metric"><small>Total recebido em vendas</small><b id="revenue">R$ 0</b></div>
+<div class="metric"><small>Lucro líquido realizado</small><b id="netProfit" class="positive">R$ 0</b></div>
+<div class="metric"><small>Aparelhos vendidos</small><b id="soldCount">0</b></div>
+<div class="metric"><small>Unidades em estoque</small><b id="stockCount">0</b></div>
+<div class="metric"><small>Capital em estoque</small><b id="stockCapital">R$ 0</b></div><div class="metric"><small>Estoque — alta liquidez</small><b id="liquidHigh">0</b></div><div class="metric"><small>Estoque — média liquidez</small><b id="liquidMedium">0</b></div><div class="metric"><small>Estoque — baixa liquidez</small><b id="liquidLow">0</b></div>
+</div>
+<p class="muted">A liquidez é uma classificação heurística inicial por família/modelo, não representa vendas garantidas nem consulta anúncios em tempo real. Ajuste sua decisão conforme procura e preços na sua região.</p><p class="muted">O lucro realizado considera compra, reparos, despesas, taxas e desconto. Registre todos os custos para não superestimar o resultado. Os dados ficam somente neste navegador/iPhone.</p>
+</div>
+<div class="card"><h2>Resultado do mês</h2><div class="grid"><div class="metric"><small>Vendas no mês</small><b id="monthSales">0</b></div><div class="metric"><small>Lucro no mês</small><b id="monthProfit">R$ 0</b></div><div class="metric"><small>Margem média</small><b id="monthMargin">0%</b></div><div class="metric"><small>Garantias a vencer</small><b id="warrantyDue">0</b></div></div></div>
+<div class="card"><h2>Histórico de resultados</h2><div id="profitHistory" class="muted">Nenhuma venda registrada.</div></div>
+<div class="card"><h2>Backup dos seus dados</h2><p class="muted">Os registros ficam somente neste navegador/iPhone. Exporte uma cópia regularmente e guarde no app Arquivos ou em outro local seguro. A restauração substitui os dados atuais.</p>
+<button onclick="exportBackup()">Exportar backup</button>
+<label>Restaurar backup JSON</label><input id="backupFile" type="file" accept="application/json">
+<button class="secondary" onclick="importBackup()">Importar backup</button>
+</div>
+</section>
+
+<section id="repair" class="hidden">
+<div class="card"><h2>Estimador de consertos</h2><p class="muted">Escolha o aparelho e o defeito para consultar uma faixa inicial de custo. Os valores são referências nacionais aproximadas e podem variar bastante por modelo, peça, cidade e disponibilidade.</p>
+<label>Marca</label><select id="repairBrand" onchange="fillRepairModels()"><option>Apple</option><option>Samsung</option><option>Xiaomi</option><option>Motorola</option><option>Google</option><option>realme</option><option>Infinix</option></select>
+<label>Modelo</label><select id="repairModel"></select>
+<label>Defeito / serviço</label><select id="repairFault" onchange="estimateRepair()"><option value="screen">Tela / display</option><option value="battery">Bateria</option><option value="charge">Conector de carga</option><option value="board">Reparo de placa / não liga</option><option value="camera">Câmera</option><option value="audio">Alto-falante / microfone</option><option value="water">Limpeza por líquido / oxidação</option><option value="back">Tampa traseira</option><option value="software">Software / formatação</option><option value="buttons">Botões / flex</option></select>
+<div class="pricebox"><h3>Assistência não especializada</h3><div class="result" id="generalRange">R$ 0 – R$ 0</div><small class="muted">Faixa estimada para oficina independente geral.</small></div>
+<div class="pricebox"><h3>Assistência especializada</h3><div class="result" id="specialRange">R$ 0 – R$ 0</div><small class="muted">Faixa estimada com margem para estrutura, diagnóstico e maior especialização.</small></div>
+<p class="muted" id="repairExplain"></p>
+<label>Orçamento real recebido (opcional, R$)</label><input id="realQuote" inputmode="decimal" placeholder="Digite o valor informado pela assistência">
+<label>Observação do orçamento</label><textarea id="quoteNote" rows="2" placeholder="Ex.: peça original, paralela, garantia, prazo..."></textarea>
+<button onclick="saveRepairQuote()">Salvar orçamento no histórico</button>
+</div>
+<div class="card"><h2>Meus orçamentos salvos</h2><div id="repairHistory" class="muted">Nenhum orçamento salvo.</div></div>
+<div class="card"><h2>Como interpretar os valores</h2><p class="muted">As faixas iniciais são referências gerais compiladas de guias e tabelas públicas brasileiras de 2026. A diferença entre assistência especializada e não especializada é uma estimativa operacional do aplicativo, não uma tabela oficial separada publicada pelo setor. Peças originais, OLED, aparelhos dobráveis e reparos de placa podem custar muito mais. Sempre peça diagnóstico e orçamento por escrito antes de comprar um aparelho com defeito.</p><p class="muted">Fontes consultadas: Loqal (faixas nacionais de tela, bateria, conector e placa); TNX (preços de bancada por exemplos de modelos); ReparoCerto (faixas por tipo de defeito); Ucaju (faixas de tela, bateria, conector, tampa e oxidação). Os dados são referências e não cotações locais de Monção/Viana ou do Maranhão.</p></div>
+</section>
+
+<section id="check" class="hidden"><div class="card"><h2>Checklist de inspeção</h2><div id="checks"></div><p class="muted">Não compre aparelho com bloqueio de conta, IMEI irregular ou procedência duvidosa. Faça testes e registre os resultados.</p></div></section>
+<section id="guide" class="hidden"><div class="card"><h2>Gestão e fórmulas</h2>
+<p><b>Oferta máxima</b> = revenda estimada − reparos − outras despesas − lucro desejado.</p>
+<p><b>Lucro líquido realizado</b> = valor recebido − preço de compra − reparos − despesas de compra − taxas e despesas da venda.</p>
+<p>Compare aparelhos equivalentes na sua região. Preço anunciado não é preço efetivamente vendido. Reserve dinheiro para garantia, devoluções, impostos e imprevistos.</p>
+<p class="muted">A classificação de liquidez é uma orientação inicial baseada em popularidade geral das famílias de aparelhos. Ela não substitui pesquisa local, comparação de anúncios, condição, preço e velocidade real de venda. Modelos importados ou de assistência limitada podem ter liquidez menor na sua região.</p><p class="muted">O catálogo reúne modelos Apple, Samsung Galaxy A/S e Xiaomi/Redmi/POCO. A lista é uma base inicial e pode precisar de atualização para lançamentos futuros. O app não consulta IMEI, bloqueios, autenticidade de peças nem cotações de mercado automaticamente. Para Samsung e Xiaomi, informe o preço de revenda pesquisado; não há preço automático confiável configurado.</p>
+<button class="danger" onclick="clearAll()">Apagar todos os dados locais</button><p class="muted">Atenção: essa ação não pode ser desfeita. Exporte um backup antes.</p>
+</div></section>
+</main>
+<nav>
+<button class="active" onclick="tab('eval',this)">🧮<br>Avaliar</button>
+<button onclick="tab('history',this)">📦<br>Compras/vendas</button>
+<button onclick="tab('finance',this)">📊<br>Financeiro</button>
+<button onclick="tab('check',this)">☑️<br>Checklist</button>
+<button onclick="tab('guide',this)">⚙️<br>Gestão</button>
+</nav>
+<script src="./app.js" defer></script>
+</body></html>
